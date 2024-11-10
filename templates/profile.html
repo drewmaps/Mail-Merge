@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% block title %}Mail Merge - Profile{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-body">
+                <h2 class="card-title text-center mb-4">Profile Settings</h2>
+                
+                <form method="POST" enctype="multipart/form-data">
+                    <div class="mb-3">
+                        <label class="form-label">Username</label>
+                        <input type="text" class="form-control" value="{{ current_user.username }}" disabled>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label class="form-label">Email</label>
+                        <input type="email" class="form-control" value="{{ current_user.email }}" disabled>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="smtp_password" class="form-label">Gmail App Password</label>
+                        <input type="password" class="form-control" id="smtp_password" name="smtp_password" 
+                               placeholder="Enter new Gmail App Password">
+                        <small class="form-text text-muted">Leave blank to keep current password</small>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="signature" class="form-label">Signature Image</label>
+                        {% if current_user.signature_path %}
+                            <img src="{{ url_for('static', filename=current_user.signature_path.split('/')[-2:] | join('/')) }}" 
+                                 class="d-block mb-2" style="max-width: 200px;">
+                        {% endif %}
+                        <input type="file" class="form-control" id="signature" name="signature" accept="image/*">
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary w-100">Update Profile</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
